@@ -1185,7 +1185,7 @@ func (r *Reader) ReadMessage(ctx context.Context) (Message, error) {
 		}
 	}
 
-	return m.decode()
+	return m, nil
 }
 
 // FetchMessage reads and return the next message from the r. The method call
@@ -1240,10 +1240,7 @@ func (r *Reader) FetchMessage(ctx context.Context) (Message, error) {
 					m.error = io.ErrUnexpectedEOF
 				}
 
-				if m.error != nil {
-					return m.message, m.error
-				}
-				return m.message.decode()
+				return m.message, m.error
 			}
 		}
 	}
